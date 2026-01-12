@@ -44,7 +44,7 @@ npm run lint
 
 ## 2. Tech Stack Used
 
-his project leverages a modern, production-ready tech stack designed for scalability and developer experience:
+This project leverages a modern, production-ready tech stack designed for scalability and developer experience:
 
 ### Core Framework & Language
 - **[Next.js 16](https://nextjs.org/)** - React framework with App Router for server-side rendering, routing, and API routes
