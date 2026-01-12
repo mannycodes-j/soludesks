@@ -66,7 +66,7 @@ export function CourseFilters({ onSearchChange, onCategoryChange, onDateChange }
             onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
             className="flex items-center gap-2 rounded-full border border-[#e1e1e1] bg-white px-5 py-3 text-sm text-[#636363] hover:bg-[#f8f8f8] transition-all duration-200 active:scale-95"
           >
-            Category
+            {selectedCategory === "All Categories" ? "Category" : selectedCategory}
             <ChevronDownIcon
               className={`h-4 w-4 transition-transform duration-300 ${showCategoryDropdown ? "rotate-180" : ""}`}
             />
