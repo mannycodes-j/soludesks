@@ -1,7 +1,5 @@
 "use client"
 
-// Top navigation bar component
-
 import {
   Bars3Icon,
   XMarkIcon,
@@ -39,12 +37,12 @@ export function Navbar({ className }: NavbarProps) {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 flex h-16 items-center border-b border-border bg-card px-4 pr-0 lg:pl-2 lg:pr-6 backdrop-blur-sm bg-card/95",
+        "sticky top-0 z-50 flex h-16 items-center justify-between border-b border-border bg-card/95 px-4 lg:px-6 backdrop-blur-sm",
         className,
       )}
     >
-      {/* Left side - (mobile) */}
-      <div className="flex items-center md:gap-3 gap-1">
+      {/* Left side - Logo and mobile menu */}
+      <div className="flex items-center gap-1 md:gap-3 shrink-0">
         <Button
           variant="ghost"
           size="icon"
@@ -57,11 +55,12 @@ export function Navbar({ className }: NavbarProps) {
         <Logo />
       </div>
 
-  
-      <div className="hidden md:flex flex-1 max-w-md mx-8 ml-12">
+      {/* search bar */}
+      <div className="hidden md:flex flex-1 justify-center max-w-md mx-4 lg:mx-8">
         <SearchInput className="w-full" />
       </div>
 
+      {/* Mobile search overlay */}
       {isSearchOpen && (
         <div className="absolute inset-x-0 top-0 z-50 flex h-16 items-center gap-2 bg-card px-4 md:hidden animate-fade-in">
           <SearchInput className="flex-1" autoFocus />
@@ -71,8 +70,8 @@ export function Navbar({ className }: NavbarProps) {
         </div>
       )}
 
-      {/* Right Side Actions */}
-      <div className="flex items-center gap-1 sm:gap-3 ml-2 md:ml-96">
+      {/* Right Side Actions  */}
+      <div className="flex items-center gap-1 sm:gap-2 lg:gap-3 shrink-0 ml-auto">
         <Button
           variant="ghost"
           size="icon"

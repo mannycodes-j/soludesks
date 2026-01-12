@@ -1,4 +1,4 @@
-## Soludesks LMS – Frontend Assessment
+## Soludesks LMS – Frontend
 
 Soludesks is a Learning Management System (LMS) frontend built with **Next.js** and **TypeScript**, providing dashboards, course management, and learning experiences for learners and admins.
 
@@ -7,54 +7,35 @@ Soludesks is a Learning Management System (LMS) frontend built with **Next.js** 
 ## 1. Project Setup Instructions
 
 ### Prerequisites
-Before you begin, ensure you have the following installed on your system:
-- **Node.js**: v18+ (LTS version recommended)
-- **Package manager**: npm or pnpm (this repository includes both `package-lock.json` and `pnpm-lock.yaml` for flexibility)
+- **Node.js**: v18+ (recommended)
+- **Package manager**: npm or pnpm (repo includes both `package-lock.json` and `pnpm-lock.yaml`)
 
-### Installation Steps
-
-1. **Clone the repository** (if applicable) or navigate to the project directory
-
-2. **Install dependencies**:
+### Install dependencies
 ```bash
 # using npm
 npm install
 
-# or using pnpm (recommended for faster installs)
+# or using pnpm
 pnpm install
 ```
 
-3. **Run the development server**:
+### Run the development server
 ```bash
 npm run dev
-# or
-pnpm dev
 ```
-The application will start on `http://localhost:3000`. Open this URL in your browser to view the application.
+Then open `http://localhost:3000` in your browser.
 
-### Build for Production
-
-To create an optimized production build:
+### Build for production
 ```bash
 npm run build
 ```
 
-This command will:
-- Compile TypeScript to JavaScript
-- Optimize and bundle all assets
-- Generate static pages where possible
-- Create a `.next` folder with the production build
-
-### Start Production Server
-
-After building, you can run the production server locally:
+### Start production server
 ```bash
 npm run start
 ```
 
-### Code Quality
-
-Run the linter to check for code quality issues:
+### Lint
 ```bash
 npm run lint
 ```
@@ -63,7 +44,7 @@ npm run lint
 
 ## 2. Tech Stack Used
 
-This project leverages a modern, production-ready tech stack designed for scalability and developer experience:
+his project leverages a modern, production-ready tech stack designed for scalability and developer experience:
 
 ### Core Framework & Language
 - **[Next.js 16](https://nextjs.org/)** - React framework with App Router for server-side rendering, routing, and API routes
@@ -127,180 +108,59 @@ The project follows Next.js App Router conventions with a clear separation of co
 - `postcss.config.mjs` - PostCSS configuration for Tailwind CSS processing
 - `components.json` - **shadcn/ui configuration file** (defines component paths, style preferences, and aliases)
 
-### Application Routes (`app/`)
-```
-app/
-├─ layout.tsx                   # Root layout wrapping entire app
-│                                # - Configures Inter font from Google Fonts
-│                                # - Sets up ReduxProvider and Analytics
-│                                # - Applies global styles
-│
-├─ globals.css                  # Main stylesheet with:
-│                                # - Tailwind CSS imports
-│                                # - CSS custom properties (design tokens)
-│                                # - Color system (light/dark mode)
-│                                # - Animation keyframes
-│                                # - Base typography styles
-│
-├─ page.tsx                     # Landing/home page
-│
-└─ (dashboard)/                 # Route group (doesn't affect URL structure)
-   ├─ layout.tsx                # Dashboard layout wrapper
-   │                             # - Uses DashboardLayout component
-   │                             # - Provides sidebar and navbar context
-   │
-   ├─ dashboard/
-   │  └─ page.tsx               # Main dashboard page
-   │
-   └─ courses/
-      ├─ page.tsx               # Course management/listing page
-      │                          # - Displays course cards in grid
-      │                          # - Includes filters and search
-      │                          # - Pagination support
-      │
-      └─ [slug]/                # Dynamic route for individual courses
-         ├─ page.tsx            # Course detail page
-         │                      # - Shows course info and applicants table
-         │
-         └─ learn/
-            └─ page.tsx        # Course learning interface
-                              # - Lesson content display
-                              # - Video player integration
-                              # - Quiz functionality
-```
+High-level structure:
 
-### Components (`components/`)
-```
-components/
-├─ layout/                      # Application shell components
-│  ├─ navbar.tsx                # Top navigation bar
-│  │                             # - Search functionality
-│  │                             # - User profile dropdown
-│  │                             # - Mobile menu toggle
-│  │
-│  ├─ sidebar.tsx               # Sidebar navigation
-│  │                             # - Navigation menu items
-│  │                             # - Responsive mobile behavior
-│  │                             # - Active route highlighting
-│  │
-│  └─ dashboard-layout.tsx     # Main dashboard wrapper
-│                                # - Combines navbar + sidebar
-│                                # - Manages layout spacing
+```text
+.
+├─ app/
+│  ├─ layout.tsx                # Root layout (Inter font, providers, global styles)
+│  ├─ globals.css               # App-level Tailwind + design tokens
+│  └─ (dashboard)/              # Authenticated dashboard area
+│     ├─ layout.tsx             # Dashboard shell layout
+│     ├─ dashboard/page.tsx     # Main dashboard
+│     └─ courses/               # Course management & detail pages
+│        ├─ page.tsx            # Courses listing / management
+│        └─ [slug]/             # Course detail + learn routes
+│           ├─ page.tsx         # Course detail page
+│           └─ learn/page.tsx   # Course learning experience
 │
-├─ common/                      # Shared, reusable components
-│  ├─ logo.tsx                  # Application logo component
-│  ├─ search-input.tsx          # Reusable search input with icon
-│  └─ stats-card.tsx            # Statistics card component
-│                                # - Displays metrics with icons
-│                                # - Supports change indicators
+├─ components/
+│  ├─ layout/                   # Shell components (navbar, sidebar, dashboard layout)
+│  ├─ common/                   # Reusable primitives (logo, stats card, search input, etc.)
+│  ├─ pages/
+│  │  └─ courses/               # Page-specific UI for courses (filters, header, tabs, pagination, cards)
+│  ├─ ui/                       # Generic UI components (table, button, inputs, video player, etc.)
+│  └─ theme-provider.tsx        # Theme provider (dark/light)
 │
-├─ pages/                       # Page-specific components
-│  ├─ courses/
-│  │  ├─ course-card.tsx        # Course card for grid display
-│  │  ├─ course-header.tsx      # Course page header with breadcrumbs
-│  │  ├─ course-filters.tsx     # Search and filter controls
-│  │  ├─ course-pagination.tsx  # Pagination component (responsive)
-│  │  └─ course-tabs.tsx        # Tab navigation for course views
-│  │
-│  └─ learn-slug/               # Learning interface components
-│     ├─ lessons-sidebar.tsx    # Lesson navigation sidebar
-│     ├─ lesson-content.tsx      # Lesson content renderer
-│     ├─ quiz-content.tsx       # Quiz display component
-│     └─ quiz-question.tsx      # Individual quiz question
+├─ lib/
+│  ├─ constants/                # Simple constant values (e.g. courses)
+│  ├─ contexts/                 # React contexts (e.g. sidebar context)
+│  ├─ data/                     # Static data used in UI (courses, applicants, lessons, navigation, quiz)
+│  ├─ hooks/                    # Custom hooks (Redux hooks, sidebar hook, etc.)
+│  ├─ providers/                # Top-level providers (Redux provider)
+│  ├─ store/                    # Redux store configuration, slices, and RTK Query APIs
+│  │  ├─ api/                   # RTK Query API slices
+│  │  ├─ slices/                # Redux slices (e.g. user slice)
+│  │  └─ index.ts               # Store bootstrap
+│  ├─ types/                    # Shared TypeScript types (course, user, navigation, etc.)
+│  └─ utils.ts                  # Shared utilities (e.g. `cn` helper)
 │
-├─ ui/                          # shadcn/ui components (60+ components)
-│                                # These are copied from shadcn/ui and fully customizable:
-│                                # - button.tsx, input.tsx, card.tsx
-│                                # - table.tsx, dialog.tsx, dropdown-menu.tsx
-│                                # - form.tsx, select.tsx, tabs.tsx
-│                                # - And many more...
-│                                # See full list in components/ui/ directory
+├─ public/
+│  └─ images/                   # Static assets
+│     ├─ branding/              # Logos, course banners, avatars
+│     └─ ui/                    # UI icons (SVGs, placeholders)
 │
-└─ theme-provider.tsx            # Theme context provider for dark/light mode
-```
-
-### Library & Utilities (`lib/`)
-```
-lib/
-├─ constants/                   # Application constants
-│  ├─ courses.constants.ts      # Course-related constants
-│  └─ index.ts                  # Central export file
+├─ styles/
+│  └─ globals.css               # Additional global styles / tokens (legacy or extended)
 │
-├─ contexts/                    # React Context providers
-│  ├─ sidebar-context.tsx       # Sidebar open/close state management
-│  └─ index.ts                  # Context exports
-│
-├─ data/                        # Static/mock data (replace with API calls)
-│  ├─ applicants.data.ts        # Sample applicant data
-│  ├─ courses.data.ts           # Course data and statistics
-│  ├─ lessons.data.ts           # Lesson content data
-│  ├─ navigation.data.ts        # Navigation menu items
-│  ├─ quiz.data.ts              # Quiz questions and answers
-│  └─ index.ts                  # Data exports
-│
-├─ hooks/                       # Custom React hooks
-│  ├─ use-redux.ts              # Typed Redux hooks (useAppSelector, useAppDispatch)
-│  ├─ use-sidebar.ts            # Sidebar state hook
-│  └─ index.ts                  # Hook exports
-│
-├─ providers/                   # Top-level React providers
-│  ├─ redux-provider.tsx        # Redux store provider wrapper
-│  └─ index.ts                  # Provider exports
-│
-├─ store/                       # Redux store configuration
-│  ├─ api/                      # RTK Query API definitions
-│  │  ├─ base.api.ts           # Base API configuration
-│  │  ├─ user.api.ts           # User-related API endpoints
-│  │  └─ index.ts              # API exports
-│  │
-│  ├─ slices/                   # Redux slices
-│  │  └─ user.slice.ts         # User state management slice
-│  │
-│  └─ index.ts                  # Store configuration and type exports
-│
-├─ types/                       # TypeScript type definitions
-│  ├─ api.types.ts             # API-related types
-│  ├─ applicant.types.ts        # Applicant data types
-│  ├─ course.types.ts          # Course data types
-│  ├─ navigation.types.ts      # Navigation types
-│  ├─ user.types.ts            # User data types
-│  └─ index.ts                 # Type exports
-│
-└─ utils.ts                     # Utility functions
-                                # - cn(): className merge utility
-                                # - Other helper functions
-```
-
-### Static Assets (`public/`)
-```
-public/
-└─ images/
-   ├─ branding/                 # Brand assets
-   │  ├─ logo.png              # Main application logo
-   │  ├─ course-banner.png     # Course banner images
-   │  └─ Avatars.png           # User avatars
-   │
-   └─ ui/                       # UI-specific images
-      ├─ icons/                 # SVG icon files
-      │  ├─ dashboard.svg
-      │  ├─ classes.svg
-      │  ├─ book.svg
-      │  └─ ... (more icons)
-      └─ placeholder.jpg        # Placeholder images
-```
-
-### Styles (`styles/`)
-```
-styles/
-└─ globals.css                  # Additional global styles
-                                # - May contain legacy styles
-                                # - Extended design tokens
-                                # - Additional animations
+├─ next.config.mjs              # Next.js configuration (images, TS options)
+├─ tsconfig.json                # TypeScript configuration
+├─ package.json                 # Scripts and dependencies
+└─ postcss.config.mjs           # PostCSS + Tailwind config
 ```
 
 ---
-
-## 4. Key Features & Architecture Decisions
+4. Key Features & Architecture Decisions
 
 ### Component Architecture
 - **shadcn/ui Components**: The project uses shadcn/ui as the primary component library. Components are copied directly into `components/ui/` rather than installed as npm packages, allowing for full customization while maintaining consistency.
@@ -329,69 +189,18 @@ styles/
 
 ## 5. Deployment Link
 
-If the project is deployed (for example, to Vercel), add your production URL here:
 
-- **Production URL**: `https://your-deployment-url.com`
 
-> Replace the placeholder above with your actual deployment link (e.g. Vercel URL) once deployed.
-
-### Deployment Considerations
-- **Environment Variables**: Configure any required environment variables in your deployment platform
-- **Build Command**: `npm run build` (or `pnpm build`)
-- **Output Directory**: `.next` (Next.js default)
-- **Node Version**: Ensure Node.js 18+ is available in your deployment environment
+- **Production URL**: `https://soludesks.vercel.app/dashboard`
 
 ---
 
 ## 6. Running in Different Environments
 
-### Local Development
-```bash
-npm run dev
-```
-- Runs on `http://localhost:3000`
-- Hot module replacement enabled
-- Development optimizations active
+- **Local development**: `npm run dev`
+- **Preview / Staging**: Build (`npm run build`) and run (`npm start`) against your staging environment
+- **Production**: Configure environment variables and deploy (e.g. via Vercel)
 
-### Preview / Staging
-```bash
-npm run build
-npm run start
-```
-- Creates optimized production build
-- Runs production server locally
-- Useful for testing before deployment
-
-### Production
-- Deploy to your preferred platform (Vercel, Netlify, AWS, etc.)
-- Configure environment variables
-- Set up CI/CD pipeline if needed
-- The app uses a central Redux store and static `lib/data/*` fixtures, so it runs without a backend by default
-- To connect to a real API, update the RTK Query definitions in `lib/store/api/`
-
----
-
-## 7. Additional Notes
-
-### Adding New shadcn/ui Components
-To add new components from shadcn/ui:
-```bash
-npx shadcn@latest add [component-name]
-```
-Example: `npx shadcn@latest add alert-dialog`
-
-### Customization
-- **Colors**: Modify CSS variables in `app/globals.css`
-- **Components**: Edit files directly in `components/ui/` (they're yours to customize)
-- **Styling**: Use Tailwind classes or extend `tailwind.config` if needed
-
-### Data Management
-Currently using static data files in `lib/data/`. To integrate with a backend:
-1. Update RTK Query API definitions in `lib/store/api/`
-2. Replace static imports with API calls
-3. Update components to use Redux selectors/hooks
-
----
+The app uses a central Redux store and static `lib/data/*` fixtures, so it runs without a backend by default. Hook it up to a real API by updating the RTK Query definitions in `lib/store/api`.
 
 Thank you for Reading!
-
